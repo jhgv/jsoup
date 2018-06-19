@@ -108,6 +108,46 @@
         <artifactId>maven-resources-plugin</artifactId>
         <version>2.4</version>
       </plugin>
+
+
+      <!--Tcc-->
+      <plugin>
+        <groupId>org.evosuite.plugins</groupId>
+        <artifactId>evosuite-maven-plugin</artifactId>
+        <version>1.0.6</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.17</version>
+        <configuration>
+          <properties>
+            <property>
+              <name>listener</name>
+              <value>org.evosuite.runtime.InitializingListener</value>
+            </property>
+          </properties>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.8</version>
+        <executions>
+          <execution>
+            <id>add-test-source</id>
+            <phase>generate-test-sources</phase>
+            <goals>
+              <goal>add-test-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>${targetFolder}</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
     <resources>
       <resource>
@@ -171,6 +211,13 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.evosuite.plugins</groupId>
+      <artifactId>evosuite-maven-plugin</artifactId>
+      <version>1.0.6</version>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
     
   <dependencyManagement>
@@ -180,6 +227,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <targetFolder>src/test/evosuite</targetFolder>
   </properties>
 
   <developers>
@@ -193,5 +241,13 @@
       <timezone>+11</timezone>
     </developer>
   </developers>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>EvoSuite</id>
+      <name>EvoSuite Repository</name>
+      <url>http://www.evosuite.org/m2</url>
+    </pluginRepository>
+  </pluginRepositories>
 
 </project>
